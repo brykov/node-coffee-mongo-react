@@ -1,12 +1,28 @@
-fs = require('fs')
-express = require('express')
-path = require('path')
-favicon = require('serve-favicon')
-logger = require('morgan')
-cookieParser = require('cookie-parser')
-bodyParser = require('body-parser')
-mongoose = require('mongoose')
+fs = require 'fs'
+express = require 'express'
+path = require 'path'
+favicon = require 'serve-favicon'
+logger = require 'morgan'
+cookieParser = require 'cookie-parser'
+bodyParser = require 'body-parser'
+mongoose = require 'mongoose'
 mongoose.connect 'mongodb://localhost/node-coffee-mongo-react'
+
+browserify = require 'browserify'
+coffeeify = require 'coffeeify'
+reactify = require 'reactify'
+bundle = browserify
+  extensions: ['.coffee']
+  debug: true
+bundle.transform coffeeify,
+  bare: false
+  header: true
+bundle.transform reactify
+bundle.add(path.join(__dirname, 'public', 'javascripts', 'main.coffee'))
+bundle.bundle (err, buf) ->
+  stream = fs.createWriteStream(path.join(__dirname, 'public', 'javascripts', 'main.js'))
+  stream.write(buf)
+  stream.end()
 
 # Bootstrap models
 models = path.join(__dirname, 'models')

@@ -8,9 +8,8 @@ module.exports = function () {
     </div>;
   var _edit =
     <div className="type-box">
-      <FancyInput provider={this} name="name"/>
-      /
-      <FancyInput provider={this} name="title"/>
+      <div>id: <FancyInput provider={this} name="name"/></div>
+      <div>title: <FancyInput provider={this} name="title"/></div>
       <button onClick={this.save}>SAVE</button>
       <button onClick={this.cancelEditMode}>CANCEL</button>
     </div>;

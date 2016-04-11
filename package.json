@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www.coffee"
+    "start": "nodemon --ext js,jade,coffee,jsx --ignore public/javascripts/main.js ./bin/www.coffee"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
