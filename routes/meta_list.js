@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const NodeType = mongoose.model('NodeType');
+const Meta = mongoose.model('Meta');
 
 router.get('/', (req, res, next) => {
-  NodeType.find({}).exec()
+  Meta.find({}).exec()
     .then(
-      (data) => res.json({ node_types: data }),
+      (data) => res.json({ meta_list: data }),
       (error) => console.log(error)
     );
 });
@@ -20,10 +20,10 @@ router.post('/', (req, res, next) => {
     if(item._new) {
       delete item._new;
       delete item._id;
-      promises.push(NodeType(item).save((err) => console.log(err)));
+      promises.push(Meta(item).save((err) => console.log(err)));
     }
     else {
-      promises.push(NodeType.update({_id: item._id}, item, (err, numberAffected, raw) => {
+      promises.push(Meta.update({_id: item._id}, item, (err, numberAffected, raw) => {
         console.log([err, numberAffected, raw]);
       }));
     }

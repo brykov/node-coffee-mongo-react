@@ -12,13 +12,18 @@ browserify = require 'browserify'
 coffeeify = require 'coffeeify'
 reactify = require 'reactify'
 bundle = browserify
-  extensions: ['.coffee']
+  extensions: ['.coffee', '.jsx']
   debug: true
 bundle.transform coffeeify,
   bare: false
   header: true
 bundle.transform reactify
-bundle.add(path.join(__dirname, 'public', 'javascripts', 'main.coffee'))
+jsx = path.join(__dirname, 'public', 'javascripts', 'templates')
+fs.readdirSync(jsx).filter((file) ->
+  ~file.search(/^[^\.].*\.jsx$/)
+).forEach (file) ->
+  bundle.require path.join(jsx, file), expose: path.basename(file, '.jsx')
+bundle.add path.join(__dirname, 'public', 'javascripts', 'main.coffee')
 bundle.bundle (err, buf) ->
   stream = fs.createWriteStream(path.join(__dirname, 'public', 'javascripts', 'main.js'))
   stream.write(buf)
@@ -33,7 +38,7 @@ fs.readdirSync(models).filter((file) ->
 
 routes = require('./routes/index')
 users = require('./routes/users')
-node_types = require('./routes/node_types')
+meta_list = require('./routes/meta_list')
 app = express()
 
 # view engine setup
@@ -58,7 +63,7 @@ app.use express.static(path.join(__dirname, 'public'))
 
 app.use '/', routes
 app.use '/users', users
-app.use '/node_types', node_types
+app.use '/meta_list', meta_list
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->
