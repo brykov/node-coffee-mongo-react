@@ -79,6 +79,7 @@ class window.App extends React.Component
   render: =>
     rr('app').bind(@)()
 
-
-
+reducer = (state, action) ->
+  {foo: 111}
+store = Redux.createStore(reducer)
 ReactDOM.render React.createElement(App), document.getElementById('react-app')

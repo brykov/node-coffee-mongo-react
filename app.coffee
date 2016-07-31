@@ -5,7 +5,9 @@ favicon = require 'serve-favicon'
 logger = require 'morgan'
 cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
+bluebird = require 'bluebird'
 mongoose = require 'mongoose'
+mongoose.Promise = bluebird
 mongoose.connect 'mongodb://localhost/node-coffee-mongo-react'
 
 browserify = require 'browserify'
