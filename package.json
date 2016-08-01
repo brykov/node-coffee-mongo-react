@@ -6,18 +6,19 @@
     "start": "nodemon --ext js,jade,coffee,jsx --ignore public/javascripts/main.js ./bin/www.coffee"
   },
   "dependencies": {
+    "bluebird": "3.x",
     "body-parser": "1.x",
     "coffee-script": "1.x",
     "cookie-parser": "1.x",
     "debug": "2.x",
     "express": "4.x",
     "jade": "1.x",
+    "mincer": "1.x",
     "mongoose": "4.x",
     "morgan": "1.x",
     "node-sass-middleware": "0.x",
     "nodemon": "1.x",
-    "serve-favicon": "2.x",
-    "bluebird": "3.x"
+    "serve-favicon": "2.x"
   },
   "devDependencies": {
     "browserify": "13.x",

@@ -1,4 +1,10 @@
-rr = require
+#= require_tree 'lib'
+#//script(src='/javascripts/react-dom.js')
+#//script(src='/javascripts/redux.js')
+#//script(src='/javascripts/react-redux.js')
+#//script(src='/javascripts/underscore-min.js')
+#//script(src='/javascripts/qwest.min.js')
+
 
 class window.FancyInput extends React.Component
   changeHandler: (e) =>
