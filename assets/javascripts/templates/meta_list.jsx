@@ -1,4 +1,4 @@
-module.exports = function () {
+meta_list_jsx = function () {
   var type_box_list = this.props.data.map((meta) =>
       <MetaItemView data={meta} parent={this} key={meta._id}/>
   );

@@ -1,4 +1,4 @@
-module.exports = function () {
+meta_item_view_jsx = function () {
   return (
     <div className="meta-item">
       {this.props.data.name}

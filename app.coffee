@@ -7,30 +7,11 @@ cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
 bluebird = require 'bluebird'
 mincer = require 'mincer'
+require('mincer-jsx')(mincer)
 mongoose = require 'mongoose'
 mongoose.Promise = bluebird
 mongoose.connect 'mongodb://localhost/node-coffee-mongo-react'
-
-browserify = require 'browserify'
-coffeeify = require 'coffeeify'
-reactify = require 'reactify'
-bundle = browserify
-  extensions: ['.coffee', '.jsx']
-  debug: true
-bundle.transform coffeeify,
-  bare: false
-  header: true
-bundle.transform reactify
-jsx = path.join(__dirname, 'public', 'javascripts', 'templates')
-fs.readdirSync(jsx).filter((file) ->
-  ~file.search(/^[^\.].*\.jsx$/)
-).forEach (file) ->
-  bundle.require path.join(jsx, file), expose: path.basename(file, '.jsx')
-bundle.add path.join(__dirname, 'public', 'javascripts', 'main.coffee')
-bundle.bundle (err, buf) ->
-  stream = fs.createWriteStream(path.join(__dirname, 'public', 'javascripts', 'main.js'))
-  stream.write(buf)
-  stream.end()
+uglifyjs = require 'uglify-js'
 
 # Bootstrap models
 models = path.join(__dirname, 'models')
@@ -56,9 +37,12 @@ app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
+
+#mincer.logger.level(4)
 environment = new mincer.Environment()
 environment.appendPath('assets/javascripts')
 environment.appendPath('assets/stylesheets')
+#environment.jsCompressor = 'uglify' #js['Compressor']
 app.use('/assets', mincer.createServer(environment))
 
 #app.use require('node-sass-middleware')(

@@ -13,16 +13,14 @@
     "debug": "2.x",
     "express": "4.x",
     "jade": "1.x",
-    "mincer": "1.x",
+    "mincer": "1.2.x",
+    "mincer-jsx": "0.x",
     "mongoose": "4.x",
     "morgan": "1.x",
-    "node-sass-middleware": "0.x",
+    "node-sass": "3.x",
     "nodemon": "1.x",
-    "serve-favicon": "2.x"
+    "serve-favicon": "2.x",
+    "uglify-js": "2.x"
   },
-  "devDependencies": {
-    "browserify": "13.x",
-    "coffeeify": "2.x",
-    "reactify": "1.x"
-  }
+  "devDependencies": {}
 }
