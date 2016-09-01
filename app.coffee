@@ -7,11 +7,11 @@ cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
 bluebird = require 'bluebird'
 mincer = require 'mincer'
-require('mincer-jsx')(mincer)
+require('mincer-babel')(mincer)
+mincer.registerEngine('.jsx', mincer.BabelEngine);
 mongoose = require 'mongoose'
 mongoose.Promise = bluebird
 mongoose.connect 'mongodb://localhost/node-coffee-mongo-react'
-uglifyjs = require 'uglify-js'
 
 # Bootstrap models
 models = path.join(__dirname, 'models')
@@ -38,11 +38,14 @@ app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
 
-#mincer.logger.level(4)
+mincer.logger.level(0)
+mincer.logger.use(console)
+#mincer.CoffeeEngine.configure({bare: true, compile: true, print: true})
 environment = new mincer.Environment()
 environment.appendPath('assets/javascripts')
 environment.appendPath('assets/stylesheets')
-#environment.jsCompressor = 'uglify' #js['Compressor']
+#environment.jsCompressor = 'uglify'
+environment.enable('source_maps')
 app.use('/assets', mincer.createServer(environment))
 
 #app.use require('node-sass-middleware')(
